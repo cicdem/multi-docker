@@ -18,4 +18,4 @@ after_success:
     - docker push cicdem/multi-docker-client
     - docker push cicdem/multi-docker-nginx
     - docker push cicdem/multi-docker-server
-    - docker push cicdem/multi-docker-worker 
+    - docker push cicdem/multi-docker-worker
