@@ -1,0 +1,21 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t cicdem/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true cicdem/react-test npm test
+
+after_success:
+    - docker build -t cicdem/multi-docker-client ./client
+    - docker build -t cicdem/multi-docker-nginx ./nginx
+    - docker build -t cicdem/multi-docker-server ./server
+    - docker build -t cicdem/multi-docker-worker ./worker
+
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push cicdem/multi-docker-client
+    - docker push cicdem/multi-docker-nginx
+    - docker push cicdem/multi-docker-server
+    - docker push cicdem/multi-docker-worker
