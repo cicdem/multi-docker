@@ -19,3 +19,16 @@ after_success:
     - docker push cicdem/multi-docker-nginx
     - docker push cicdem/multi-docker-server
     - docker push cicdem/multi-docker-worker
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: eu-west-1
+    app: multi-docker
+    env: cicdem-multi-docker-test
+    bucket_name: elasticbeanstalk-eu-west-1-665873165779
+    bucket_path: docker-multi
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
